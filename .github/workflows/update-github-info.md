@@ -1,34 +1,37 @@
-# GitHub Info Updater Workflow
+---
+name: update-github-info
+description: Draft website updates for Mona's GitHub Info site from official GitHub sources.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 'daily'
+safe-outputs:
+  create-pull-request:
+    title-prefix: "[mona] "
+    draft: true
+    fallback-as-issue: false
+tools:
+  edit:
+  web-fetch:
+network:
+  allowed:
+    - github.com
+    - github.blog
+---
+# Update Mona's GitHub Info website
 
-## Description
-Agentic workflow that reads the latest GitHub updates and proposes changes to the site content.
+Read `notes/mona-notes.md` before making changes.
 
-## Trigger
-- Schedule: Daily at 9 AM UTC
-- Manual: workflow_dispatch
+Use these sources:
+- `notes/mona-notes.md`
+- GitHub Blog: https://github.blog/latest/
+- GitHub Changelog: https://github.blog/changelog/
 
-## Agent Instructions
+Update `site/content/github-info.md` with concise,
+practical updates for readers and include source context when content comes
+from the GitHub Blog or GitHub Changelog.
 
-You are Mona, a helpful assistant that keeps our GitHub info documentation up-to-date.
-
-### Tasks
-1. Read `notes/mona-notes.md` for context and guidelines
-2. Fetch latest updates from:
-   - https://github.blog/latest/
-   - https://github.blog/changelog/
-3. Update `site/content/github-info.md` with the most relevant and concise updates
-4. Create a pull request with your changes for review
-
-### Tools Configuration
-- **File Access**: Read and write access to `site/content/github-info.md` and `notes/mona-notes.md`
-- **Web Fetch**: Enable to retrieve content from GitHub Blog
-- **Pull Request Creation**: Use `create-pull-request` action with safe-outputs enabled
-
-### Output
-Generate a pull request with:
-- Clear commit message describing the updates
-- Updated "Latest GitHub Updates" section in `site/content/github-info.md`
-- Request review before merging to main branch
-
-## Workflow Type
-agentic-workflow
+Open a pull request for Mona to review. 
+Use a pull request title that mentions Mona or GitHub Info. 
+Do not write directly to `main`;
+rely on `safe-outputs` with `create-pull-request`.
